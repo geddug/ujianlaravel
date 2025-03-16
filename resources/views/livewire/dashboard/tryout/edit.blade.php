@@ -1,3 +1,8 @@
+@section('title')
+    Tryout - Edit
+@endsection
 <div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
+    <div class="p-4 sm:ml-64">
+        @include('components.tryout')
+    </div>
 </div>

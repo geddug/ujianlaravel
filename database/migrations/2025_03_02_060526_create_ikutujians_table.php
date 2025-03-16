@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tryouts', function (Blueprint $table) {
+        Schema::create('ikutujians', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('nama_tryout');
-            $table->integer('mapel_id');
-            $table->longText('arr_ujian_id');
-            $table->integer('re_tryout');
-            $table->integer('jeda_waktu');
-            $table->string('merge_ujian');
+            $table->integer('ujian_id');
+            $table->string('user_id');
+            $table->longText('arr_soal_id');
+            $table->longText('arr_jawaban');
+            $table->datetime('start')->nullable();
+            $table->datetime('end')->nullable();
             $table->string('status');
+            $table->integer('total_nilai');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tryouts');
+        Schema::dropIfExists('ikutujians');
     }
 };

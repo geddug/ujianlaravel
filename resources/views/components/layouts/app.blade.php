@@ -14,7 +14,11 @@
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50" x-init="initFlowbite();">
     @if (str_contains(request()->url(), 'dashboard'))
-        @include('components.layouts.nav')
+        @if (Auth::user()->role != 'siswa')
+            @include('components.layouts.nav')
+        @else
+            @include('components.layouts.nav-siswa')
+        @endif
     @endif
     {{ $slot }}
     @stack('scripts')

@@ -48,4 +48,13 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+    public function soal() {
+        return $this->hasMany(Soal::class,'user_id');
+    }
+    public function ikutujian() {
+        return $this->hasMany(Ikutujian::class,'user_id');
+    }
+    public function ujian() {
+        return $this->hasMany(Ujian::class,'user_id');
+    }
 }

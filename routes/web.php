@@ -5,17 +5,23 @@ use App\Livewire\Dashboard\Admin\Create;
 use App\Livewire\Dashboard\Admin\Edit;
 use App\Livewire\Dashboard\Admin\Index;
 use App\Livewire\Dashboard\Dashboard;
+use App\Livewire\Dashboard\Hasilujian\Index as HasilujianIndex;
+use App\Livewire\Dashboard\Ikutujian\Index as IkutujianIndex;
 use App\Livewire\Dashboard\Mapel\Create as MapelCreate;
 use App\Livewire\Dashboard\Mapel\Edit as MapelEdit;
 use App\Livewire\Dashboard\Mapel\Index as MapelIndex;
 use App\Livewire\Dashboard\Materi\Create as MateriCreate;
 use App\Livewire\Dashboard\Materi\Edit as MateriEdit;
 use App\Livewire\Dashboard\Materi\Index as MateriIndex;
+use App\Livewire\Dashboard\Pembahasanujian\Index as PembahasanujianIndex;
 use App\Livewire\Dashboard\Profile\Index as ProfileIndex;
 use App\Livewire\Dashboard\Profile\Password;
 use App\Livewire\Dashboard\Soal\Create as SoalCreate;
 use App\Livewire\Dashboard\Soal\Edit as SoalEdit;
 use App\Livewire\Dashboard\Soal\Index as SoalIndex;
+use App\Livewire\Dashboard\Tryout\Create as TryoutCreate;
+use App\Livewire\Dashboard\Tryout\Edit as TryoutEdit;
+use App\Livewire\Dashboard\Tryout\Index as TryoutIndex;
 use App\Livewire\Dashboard\Ujian\Create as UjianCreate;
 use App\Livewire\Dashboard\Ujian\Edit as UjianEdit;
 use App\Livewire\Dashboard\Ujian\Index as UjianIndex;
@@ -59,7 +65,23 @@ Route::middleware('auth')->group(function () {
         Route::get('dashboard/ujian/create', UjianCreate::class)->name('ujian.create');
         Route::get('dashboard/ujian/edit/{id}', UjianEdit::class)->name('ujian.edit');
 
+        Route::get('dashboard/tryout', TryoutIndex::class)->name('tryout.index');
+        Route::get('dashboard/tryout/create', TryoutCreate::class)->name('tryout.create');
+        Route::get('dashboard/tryout/edit/{id}', TryoutEdit::class)->name('tryout.edit');
+
         Route::any('uploader', [Upload::class, 'uploader'])->name('upload');
+    });
+
+    Route::middleware('role:siswa')->group(function () {
+        Route::get('dashboard/ikutujian/{id}', IkutujianIndex::class)->name('ikutujian.index');
+    });
+
+    Route::middleware('role:siswa,admin,guru')->group(function () {
+        Route::get('dashboard/pembahasanujian/{id}', PembahasanujianIndex::class)->name('pembahasanujian.index');
+    });
+
+    Route::middleware('role:siswa,admin,guru')->group(function () {
+        Route::get('dashboard/hasilujian', HasilujianIndex::class)->name('hasilujian.index');
     });
 
     Route::get('dashboard/profile', ProfileIndex::class)->name('profile.index');

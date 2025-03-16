@@ -1,3 +1,8 @@
+@section('title')
+    Tryout - Tambah
+@endsection
 <div>
-    {{-- Stop trying to control. --}}
+    <div class="p-4 sm:ml-64">
+        @include('components.tryout')
+    </div>
 </div>

@@ -17,6 +17,9 @@ class Mapel extends Model
         return $this->hasMany(Soal::class,'mapel_id');
     }
     public function ujian() {
-        return $this->hasMany(Soal::class,'mapel_id');
+        return $this->hasMany(Ujian::class,'mapel_id');
+    }
+    public function tryout() {
+        return $this->hasMany(Tryout::class,'mapel_id');
     }
 }

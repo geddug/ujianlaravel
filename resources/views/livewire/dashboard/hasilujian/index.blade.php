@@ -1,17 +1,15 @@
 @section('title')
-    Tryout
+    Hasil Ujian
 @endsection
 <div>
-    <div class="p-4 sm:ml-64">
+    <div class="max-w-5xl mx-auto p-4">
         @if (session()->has('message'))
             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert">
                 {{ session('message') }}
             </div>
         @endif
-        <p class="mb-5"><a href="{{ route('tryout.create') }}"
-                class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                wire:navigate>Baru</a></p>
+        
 
         <form class="md:grid grid-cols-4 gap-4 mb-5" wire:submit="find">
             <select
@@ -21,14 +19,6 @@
                 @foreach ($mapel as $k)
                     <option value="{{ $k->id }}">{{ $k->nama_mapel }}</option>
                 @endforeach
-            </select>
-
-            <select
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-5"
-                wire:model="selectedStatus" wire:change="find">
-                <option value="">Status</option>
-                <option value="yes">aktif</option>
-                <option value="no">non aktif</option>
             </select>
 
             <label for="default-search"
@@ -63,7 +53,7 @@
                                 </svg></a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            <a wire:click.prevent="sortBy('nama_tryout')" role="button" href="#">Ujian <svg
+                            <a wire:click.prevent="sortBy('ujian.nama_ujian')" role="button" href="#">Ujian <svg
                                     class="w-3 h-3 inline-block text-gray-800 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -73,7 +63,7 @@
                                 </svg></a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            <a wire:click.prevent="sortBy('mapel.nama_mapel')" role="button" href="#">Mapel <svg
+                            <a wire:click.prevent="sortBy('start')" role="button" href="#">Waktu <svg
                                     class="w-3 h-3 inline-block text-gray-800 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -83,7 +73,7 @@
                                 </svg></a>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            <a wire:click.prevent="sortBy('status')" role="button" href="#">Status <svg
+                            <a wire:click.prevent="sortBy('total_nilai')" role="button" href="#">Bobot <svg
                                     class="w-3 h-3 inline-block text-gray-800 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -103,34 +93,34 @@
                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $loop->iteration }}
+                                {{ $loop->iteration + $data->firstItem() - 1 }}
                             </th>
                             <td class="px-6 py-4">
-                                {{ $k->nama_tryout }}
+                                {{ $k->ujian->nama_ujian }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $k->mapel->nama_mapel }}
+                                {{ date('j M Y H:i',strtotime($k->start)) }}
                             </td>
                             <td class="px-6 py-4">
-                                @if ($k->status == 'yes')
-                                    <button wire:click="setoff({{ $k->id }})"
-                                        class="font-medium text-green-600 dark:text-green-500 hover:underline">{{ $k->status }}</button>
-                                @else
-                                    <button wire:click="seton({{ $k->id }})"
-                                        class="font-medium text-red-600 dark:text-red-500 hover:underline">{{ $k->status }}</button>
-                                @endif
+                                {{ $k->total_nilai }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('tryout.edit', $k->id) }}" wire:navigate
-                                    class="font-medium text-primary-600 dark:text-primary-500 hover:underline mr-2">Edit</a>
-                                <button wire:click="destroy({{ $k->id }})"
-                                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Hapus</button>
+                                @if($k->status == 'belum')
+                                <a href="{{ route('ikutujian.index', $k->ujian->id) }}" wire:navigate
+                                    class="font-medium text-primary-600 dark:text-primary-500 hover:underline mr-2">Lanjut Ujian</a>
+                                @else
+                                <a href="{{ route('pembahasanujian.index', $k->id) }}" wire:navigate
+                                    class="font-medium text-primary-600 dark:text-primary-500 hover:underline mr-2">Detail</a>
+                                @endif
+                                
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        {{ $data->links() }}
+        <div class="my-5">
+            {{ $data->links() }}
+        </div>
     </div>
 </div>
