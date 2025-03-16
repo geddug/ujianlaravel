@@ -11,8 +11,8 @@
     <div class="mb-5">
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mapel</label>
         <select
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            wire:model="mapel_id" wire:change="find" required>
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 searchselect"
+            wire:model="mapel_id" wire:change="find" onchange="setTimeout(function() { searchselect() }, 1000);" required>
             <option value="">Pilih</option>
             @foreach ($mapel as $k)
                 <option value="{{ $k->id }}">{{ $k->nama_mapel }}</option>
@@ -26,7 +26,7 @@
     <div class="mb-5">
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Materi</label>
         <select
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 searchselect"
             wire:model="materi_id" required>
             <option value="">Pilih</option>
             @foreach ($materi as $k)
@@ -152,6 +152,7 @@
     <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
     <script>
         setTimeout(function() {
+            searchselect();
             tinymce.init({
                 selector: '.mce',
                 plugins: 'image code powerpaste wordcount table media insertdatetime searchreplace visualblocks fullscreen autolink link charmap preview anchor lists math', // Include the image plugin
